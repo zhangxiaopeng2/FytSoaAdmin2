@@ -6,20 +6,19 @@
             <div class="login-left-bg"></div>
         </div>
         <div class="login-right">
-            <form id="forms">
+            <el-form id="forms" :rules="rules2" ref="ruleForm2">
                 <h1>用户登录</h1>
                 <div class="cell"><span class="icon-user"></span>
-                <input type="text" name="loginname" id="loginname" lay-verify="required" v-model="UserInfo.loginname" lay-verType="tips" placeholder="登录账号" autocomplete="off"></div>
+                <input type="text" v-model="UserInfo.loginname" placeholder="用户名" autocomplete="off"></div>
                 <div class="cell"><span class="icon-pwd"></span>
-                <input type="password" name="password" id="password" lay-verify="required" v-model="UserInfo.password" lay-verType="tips" placeholder="登录密码" autocomplete="off"></div>
+                <input type="password" v-model="UserInfo.password" lay-verType="tips" placeholder="登录密码" autocomplete="off"></div>
                 <div class="login-tip"><span>账号密码错误！</span></div>
                 <div class="wjpwd"><a href="http://www.feiyit.com" target="_blank">忘记密码？</a></div>
                 <div class="login-btn">
                     <button class="layui-btn layui-btn-normal" @click="SubmitLogin()" lay-filter="loginsub">登录</button>
                     <button type="button" class="layui-btn layui-btn-danger">重置</button>
                 </div>
-                <input type="hidden" name="privateKey"  /><input type="hidden" name="publicKey"/>
-            </form>
+            </el-form>
         </div>
         <div class="layui-clear"></div>
     </div>
@@ -30,18 +29,55 @@
 </template>
 <script>
 import { mapGetters } from 'vuex';
-export default{
+import {alertExtention} from '../common/js/messageHelper.js';
+import {GetUrl} from '../common/URL.js';
+import qs from 'qs';
+export default{ 
   data(){
     return {
       UserInfo:{
         loginname:'',
         password:''
-      }
+      },
+      rules2: {
+          loginname: [
+            { required: true, message: '请输入账号', trigger: 'blur' },
+          ],
+          password: [
+            { required: true, message: '请输入密码', trigger: 'blur' },
+          ]
+        },
+        checked: true
     }
   },
   methods:{
     SubmitLogin:function(){
-      alert(this.UserInfo.loginname);
+        var _this = this;
+        if(this.UserInfo.loginname==""||this.UserInfo.loginname==undefined){
+          alertExtention(_this,"请输入用户名");
+          return;
+        }if(this.UserInfo.password==""||this.UserInfo.password==undefined){
+          alertExtention(_this,"请输入密码");
+          return;
+        }
+        var loginPara={loginname:this.UserInfo.loginname,password:this.UserInfo.password};
+
+        var instance =this. axios.create({
+
+ headers: {'content-type': 'application/x-www-form-urlencoded'}
+
+});
+
+instance .post('/api/admin/login', qs.stringify(loginPara)).then(res => {
+  alert(123);
+});
+
+        this.axios.post('/api/admin/login', qs.stringify(loginPara)).then((res)=>{
+          console.log(res);
+        }).catch((error)=>{
+          console.log(error);
+        })
+
     }
   }
 }

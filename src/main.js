@@ -11,13 +11,18 @@ import Vuex from 'vuex'
 //import 'nprogress/nprogress.css'
 import routes from './routes'
 import Mock from './mock'
+import axios from 'axios'
 Mock.bootstrap();
 import 'font-awesome/css/font-awesome.min.css'
 
 Vue.use(ElementUI)
 Vue.use(VueRouter)
 Vue.use(Vuex)
+ 
+axios.defaults.baseURL='http://localhost:8088'
+axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded'
 
+Vue.prototype.axios=axios 
 //NProgress.configure({ showSpinner: false });
 
 const router = new VueRouter({

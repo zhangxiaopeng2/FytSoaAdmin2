@@ -2,7 +2,7 @@
   "name": "vueadmin",
   "version": "1.0.5",
   "description": "vue admin project",
-  "author": "taylor <709161610@qq.com>",
+  "author": "",
   "license": "MIT",
   "scripts": {
     "dev": "node build/dev-server.js",
@@ -10,12 +10,14 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "ajax": "0.0.4",
     "axios": "^0.15.3",
     "echarts": "^3.3.2",
     "element-ui": "^1.2.8",
     "font-awesome": "^4.7.0",
     "nprogress": "^0.2.0",
     "vue": "^2.2.2",
+    "vue-axios": "^2.1.4",
     "vue-router": "^2.3.0",
     "vuex": "^2.0.0-rc.6"
   },
