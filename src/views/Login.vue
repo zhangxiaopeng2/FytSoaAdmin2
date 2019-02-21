@@ -62,21 +62,15 @@ export default{
         }
         var loginPara={loginname:this.UserInfo.loginname,password:this.UserInfo.password};
 
-        var instance =this. axios.create({
-
- headers: {'content-type': 'application/x-www-form-urlencoded'}
-
-});
-
-instance .post('/api/admin/login', qs.stringify(loginPara)).then(res => {
-  alert(123);
-});
-
-        this.axios.post('/api/admin/login', qs.stringify(loginPara)).then((res)=>{
-          console.log(res);
-        }).catch((error)=>{
-          console.log(error);
-        })
+    this.axios .post('/api/admin/login', qs.stringify(loginPara)).then((res) => {
+        if(res.data.success){
+          sessionStorage.setItem('user',JSON.stringify(res.data.data));
+          this.$router.push({path:'/table'})                              
+        }else{
+          alertExtention(_this,res.data.message);
+          return;
+        }
+    });
 
     }
   }
